@@ -1,0 +1,24 @@
+//프로그램 실행 부분. namespace~Main() 메소드 사이 구조 이해 필
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Week02Proj01
+{
+    static class Start
+    {
+        /// <summary>
+        /// 해당 애플리케이션의 주 진입점입니다.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FormMain());
+        }
+    }
+}
