@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,12 +15,14 @@ namespace Week04HomeWork
     {
         //인스턴수 필드(변수) = 멤버 변수
         Department[] departments;
+        List<Professor> professors;
         //생성자 = 인스턴스 생성시 초기화가 필요한 코드 삽입
         public FormManager()
         {
             //처음 한번만
             InitializeComponent();
             departments = new Department[10];
+            professors = new List<Professor>();
         }
 
         
@@ -78,6 +81,47 @@ namespace Week04HomeWork
                 }
                 lbxDepartment.Items.RemoveAt(lbxDepartment.SelectedIndex);
                 lbxDepartment.SelectedIndex = -1; //선택해제
+            }
+        }
+
+        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch(tabMain.SelectedIndex){
+                case 0: break;
+                case 1:
+                    cmbProfessorDepartment.Items.Clear();
+                    foreach (var department in departments)
+                    {
+                        if(department != null) { 
+                        cmbProfessorDepartment.Items.Add(department);
+                        }
+                    }
+                    //선택초기화
+                    cmbProfessorDepartment.SelectedIndex = -1;
+                    lbxProfessor.Items.Clear();
+                    break;
+                case 2: break;
+                default: break;
+            }
+        }
+
+        private void cmbProfessorDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //index값 검사해서 진행여부 결정
+            lbxProfessor.Items.Clear();
+            //as는 형변환 but 실패해면 null 반환
+            var department = cmbProfessorDepartment.SelectedItem as Department;
+            if(department != null)
+            {
+                foreach(var professor in professors)
+                {
+                    //professor의 학과코드와 department의 코드가 같으면 보여주기
+                    //null검사는 always.
+                    if(professor != null && professor.DepartmentCode == department.Code)
+                    {
+                        lbxProfessor.Items.Add(professor);
+                    }
+                }
             }
         }
     }
